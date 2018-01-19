@@ -1,5 +1,5 @@
 use std::iter;
-use std::io::{self, Write};
+use std::io::Write;
 use std::string::FromUtf8Error;
 
 const DEFAULT_CAPACITY: usize = 1024;
@@ -31,10 +31,10 @@ impl Builder {
     /// use string_builder::Builder;
     ///
     /// let mut builder = Builder::default();
-    /// builder.append("some string").unwrap();
+    /// builder.append("some string");
     /// ```
-    pub fn append<T: ToBytes>(&mut self, buf: T) -> io::Result<()> {
-        self.0.write_all(buf.to_bytes().as_slice())
+    pub fn append<T: ToBytes>(&mut self, buf: T) {
+        self.0.write_all(&buf.to_bytes()).unwrap()
     }
 
     /// Return the current length in bytes of the underlying buffer.
@@ -45,7 +45,7 @@ impl Builder {
     /// use string_builder::Builder;
     ///
     /// let mut builder = Builder::default();
-    /// builder.append("four").unwrap();
+    /// builder.append("four");
     /// assert_eq!(builder.len(), 4);
     /// ```
     pub fn len(&self) -> usize {
@@ -61,9 +61,9 @@ impl Builder {
     /// use string_builder::Builder;
     ///
     /// let mut builder = Builder::default();
-    /// builder.append("i am building").unwrap();
-    /// builder.append(' ').unwrap();
-    /// builder.append("a string").unwrap();
+    /// builder.append("i am building");
+    /// builder.append(' ');
+    /// builder.append("a string");
     /// assert_eq!(builder.string().unwrap(), "i am building a string");
     /// ```
     pub fn string(self) -> Result<String, FromUtf8Error> {
@@ -127,11 +127,11 @@ mod tests {
     #[test]
     fn test_all_supported_types() {
         let mut b = Builder::default();
-        b.append(String::from("hello")).unwrap();
-        b.append(',').unwrap();
-        b.append(b' ').unwrap();
-        b.append("world").unwrap();
-        b.append(" it works".as_bytes()).unwrap();
+        b.append(String::from("hello"));
+        b.append(',');
+        b.append(b' ');
+        b.append("world");
+        b.append(" it works".as_bytes());
 
         assert_eq!(b.string().unwrap(), "hello, world it works");
     }
@@ -139,9 +139,9 @@ mod tests {
     #[test]
     fn test_individual_unicode_characters() {
         let mut b = Builder::default();
-        b.append('‘').unwrap();
-        b.append("starts with and ends with").unwrap();
-        b.append('‗').unwrap();
+        b.append('‘');
+        b.append("starts with and ends with");
+        b.append('‗');
 
         assert_eq!(b.string().unwrap(), "‘starts with and ends with‗");
     }
@@ -149,8 +149,8 @@ mod tests {
     #[test]
     fn test_tool_album() {
         let mut b = Builder::default();
-        b.append('\u{00C6}').unwrap();
-        b.append("nima").unwrap();
+        b.append('\u{00C6}');
+        b.append("nima");
 
         assert_eq!(b.string().unwrap(), "\u{00C6}nima");
     }

@@ -13,9 +13,9 @@ use string_builder::Builder;
 
 fn main() {
     let mut b = Builder::default();
-    b.append("it").unwrap();
-    b.append(' ').unwrap();
-    b.append("works!").unwrap();
+    b.append("it");
+    b.append(' ');
+    b.append("works!");
 
     assert_eq!(b.string().unwrap(), "it works!");
 }
