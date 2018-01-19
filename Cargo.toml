@@ -2,5 +2,11 @@
 name = "string-builder"
 version = "0.1.0"
 authors = ["Garrett Squire <garrettsquire@gmail.com>"]
+description = "A simple string builder type"
+repository = "https://github.com/gsquire/string-builder"
+license = "MIT"
+keywords = ["string"]
+documentation = "https://docs.rs/string-builder"
+readme = "README.md"
 
 [dependencies]
